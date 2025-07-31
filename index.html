@@ -1,1 +1,394 @@
-Hello, this is me Kundan
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kundan Dahal - Computer Engineer</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            overflow: auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: #2c3e50;
+            color: #fff;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            letter-spacing: 2px;
+        }
+
+        header .subtitle {
+            font-size: 1.2rem;
+            color: #bdc3c7;
+        }
+        
+        .contact-info {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .contact-info a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .contact-info a:hover {
+            color: #3498db;
+        }
+        
+        #intro {
+            background: #ffffff;
+            text-align: center;
+            padding: 4rem 20px;
+        }
+        
+        #intro img {
+            width: 350px;
+            height: 350px;
+            border-radius: 70%;
+            border: 10px solid #2c3e50;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+        }
+        
+        #intro .intro-text {
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        section {
+            padding: 2rem 0;
+        }
+        
+        h2 {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.2rem;
+            color: #2c3e50;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            padding: 25px;
+            background: #fff;
+            border-left: 5px solid #3498db;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .card h3 {
+            margin: 0 0 5px 0;
+            color: #3498db;
+            font-size: 1.4rem;
+        }
+        
+        /* Style for project links */
+        .card h3 a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .card h3 a:hover {
+            text-decoration: underline;
+        }
+
+        .card .subheading {
+            margin: 0;
+            font-style: italic;
+            color: #555;
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+        }
+        
+        .card ul {
+            margin-top: 10px;
+        }
+
+        ul {
+            list-style: disc;
+            padding-left: 20px;
+        }
+
+        #skills-interests-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .skills-box {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .skills-box h3 {
+             margin-top: 0;
+             text-align: center;
+             color: #2c3e50;
+             border-bottom: 1px solid #ccc;
+             padding-bottom: 10px;
+        }
+
+        .skills-box ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .skills-box li {
+            background: #34495e;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+        
+        .skills-box li:hover {
+            background-color: #3498db;
+        }
+
+        #scores {
+            text-align: center;
+        }
+        .score-item {
+            display: inline-block;
+            margin: 0 20px;
+        }
+        .score-item .score-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+         .score-item .score-label {
+            font-size: 1rem;
+            color: #555;
+         }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background: #2c3e50;
+            color: #fff;
+            margin-top: 2rem;
+        }
+
+        @media(max-width: 768px) {
+            #skills-interests-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Kundan Dahal</h1>
+            <p class="subtitle">Computer Engineer</p>
+            <ul class="contact-info">
+                <li><a href="mailto:kundangtz.109@gmail.com">kundangtz.109@gmail.com</a></li>
+                <li><a href="mailto:074bct517.kundan@pcampus.edu.np">074bct517.kundan@pcampus.edu.np</a></li>
+                <li><a href="tel:+977-9865022962">+977-9865022962</a></li>
+                <li><a href="https://www.linkedin.com/in/kundan-dahal" target="_blank">LinkedIn</a></li>
+                <li><a href="https://github.com/Kundan0" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section id="intro">
+        <img src="profile.jpg" alt="Kundan Dahal">
+        <div class="intro-text">
+            <p>A highly motivated Computer Engineer with a passion for machine learning, systems programming, and building robust, scalable infrastructure. Recognized for strong academic performance and problem-solving skills, with hands-on experience in software development and system optimization.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <section id="experience">
+            <h2>Experience</h2>
+            <div class="card">
+                <h3>Solutions Engineer</h3>
+                <p class="subheading">LogPoint | May 2024 - Present</p>
+                <ul>
+                    <li>Developed a scalable infrastructure monitoring and alerting system for hundreds of systems using Python, Rust, Next.js, Prometheus, and Grafana.</li>
+                    <li>Applied hands-on expertise in system application profiling and troubleshooting using advanced tools such as async-profiler, gdb, lldb, btrace etc for performance tuning and debugging.</li>
+                    <li>Conducted in-depth program heap dump and binary analysis to identify memory leaks, optimize resource usage, and enhance application performance.</li>
+                    <li>Used AWS and Infrastructure as Code (IaC) tools to design and deploy scalable, reliable infrastructure.</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Associate Solutions Engineer</h3>
+                <p class="subheading">LogPoint | February 2022 - April 2024</p>
+                <ul>
+                    <li>Troubleshot complex technical issues to optimize the performance of LogPoint's SIEM solutions.</li>
+                    <li>Improved system stability and security with expertise in Linux, networking, and system management.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="teaching-experience">
+             <h2>Teaching Experience</h2>
+             <div class="card">
+                <h3>Physics and Mathematics Instructor</h3>
+                <p class="subheading">Whitehouse Education Zone, Bharatpur, Nepal | 2017 (6 months)</p>
+                <ul>
+                    <li>Invited to teach Physics and Mathematics after securing 7th rank nationwide in the IOE Entrance Examination.</li>
+                    <li>Mentored students on entrance exam strategies, problem-solving techniques, and conceptual understanding.</li>
+                    <li>Gained valuable teaching experience in a professional academic setting, with all instruction delivered in English.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Academic & Personal Projects</h2>
+            <!-- IMPORTANT: Replace the href="#" with the actual link to your project -->
+            <div class="card">
+                <h3><a href="https://github.com/Kundan0/RedisRust" target="_blank">Redis Server</a></h3>
+                <p class="subheading">Independent Project | 2024</p>
+                <p>Developed a Redis server using Tokio, an asynchronous Rust library, complete with comprehensive tests.</p>
+            </div>
+            <div class="card">
+                <h3><a href="https://github.com/Kundan0/VehicleVelocityEstimation.git" target="_blank">Vehicle Velocity Estimation Using Monocular Camera</a></h3>
+                <p class="subheading">Final Year Major Project | 2021/2022</p>
+                <p>Developed a machine learning model for estimating vehicle velocity using optical flow, depth, and position as features. Implemented the model using PyTorch.</p>
+            </div>
+             <div class="card">
+                <h3><a href="https://github.com/Kundan0/ReinforcementLearning.git" target="_blank">Learning to Play Cartpole Using Reinforcement Learning</a></h3>
+                <p class="subheading">Artificial Intelligence Project | 2021/2022</p>
+                <p>Built a self-learning agent that learns to play Cart Pole game using Q-learning, Actor-Critic, and Policy Gradient. Used PyTorch as the machine learning library.</p>
+            </div>
+            <div class="card">
+                <h3><a href="https://github.com/Kundan0/RentApp.git" target="_blank">Rent Management App</a></h3>
+                <p class="subheading">Third Year Project | 2020/2021</p>
+                <p>Developed a Rent Management mobile app using React Native and Firebase. Implemented a user-friendly platform that allows tenants and owners to easily find and manage rental properties.</p>
+            </div>
+            <div class="card">
+                <h3><a href="https://github.com/Kundan0/BSTVisualization.git" target="_blank">Visualization of Operations in Binary Search Tree</a></h3>
+                <p class="subheading">Data Structures and Algorithms Project | 2018/19</p>
+                <p>Developed graphical visualizations of Binary Search Tree node addition, deletion, and traversal using C++/SFML.</p>
+            </div>
+              <div class="card">
+                <h3><a href="https://github.com/Kundan0/LinkedListVisualization.git" target="_blank">Visualization of Operations in Linked List</a></h3>
+                <p class="subheading">Data Structures and Algorithms Project | 2018/19</p>
+                <p>Developed graphical visualization of Linked List node addition, deletion, and traversal using C++/SFML for Data Structures and Algorithms project.</p>
+            </div>
+             <div class="card">
+                <h3><a href="https://github.com/Kundan0/UUA.git" target="_blank">Up, Up and Away</a></h3>
+                <p class="subheading">C++ Project | 2018</p>
+                <p>Developed a fast-paced, survival-based coin collection game using SFML, a C++ graphics library.</p>
+            </div>
+        </section>
+
+        <section id="education">
+            <h2>Education</h2>
+            <div class="card">
+                <h3>Institute of Engineering, Pulchowk Campus</h3>
+                <p class="subheading">Computer Engineering | 2017-2022 | Aggregate percentage: 74.19</p>
+            </div>
+            <div class="card">
+                <h3>Valmiki Shiksha Sadan Higher Secondary School</h3>
+                <p class="subheading">+2 Science / High School | 2015-2017 | Aggregate percentage: 86.4</p>
+            </div>
+            <div class="card">
+                <h3>Sun Rise English School</h3>
+                <p class="subheading">Grade X | 2015 | Percentage: 88.25</p>
+            </div>
+        </section>
+        
+        <section id="achievements">
+            <h2>Achievements & Test Scores</h2>
+            <div class="card">
+                <h3>7th Rank in IOE Engineering Entrance Examination 2018</h3>
+                <p>Achieved 7th rank out of 12,000 candidates nationwide, placing in the top 0.05 percentile.</p>
+            </div>
+            <div class="card">
+                <h3>Golden Jubilee Scholarship 2018</h3>
+                <p>Awarded a prestigious merit-based scholarship by the Indian government for high-achieving students across South Asia.</p>
+            </div>
+            <div id="scores" class="card">
+                 <div class="score-item">
+                    <div class="score-value">324</div>
+                    <div class="score-label">GRE Score</div>
+                    <p class="subheading">(Verbal: 160, Quantitative: 164)</p>
+                 </div>
+                 <div class="score-item">
+                    <div class="score-value">103</div>
+                    <div class="score-label">TOEFL iBT Score</div>
+                    <p class="subheading">(Reading: 30, Listening: 27, Speaking: 23, Writing: 23)</p>
+                 </div>
+            </div>
+        </section>
+        
+        <section id="skills-and-interests">
+            <h2>Skills & Interests</h2>
+            <div id="skills-interests-container">
+                 <div class="skills-box">
+                    <h3>Technical Skills</h3>
+                    <ul>
+                        <li>Rust</li><li>C/C++</li><li>Python</li><li>JavaScript</li><li>SQL</li><li>Git</li><li>Docker</li><li>GitLab CI/CD</li><li>PyTorch</li><li>NumPy</li><li>Pandas</li><li>OpenCV</li><li>Axum (Rust)</li><li>Tokio (Rust)</li><li>AWS</li><li>Firebase</li><li>MongoDB</li>
+                    </ul>
+                </div>
+                <div class="skills-box">
+                    <h3>Areas of Interest</h3>
+                    <ul>
+                        <li>Machine Learning</li><li>Reinforcement Learning</li><li>Systems Programming</li><li>Networking</li><li>Algorithms</li><li>Security</li>
+                    </ul>
+                </div>
+                 <div class="skills-box">
+                    <h3>Languages</h3>
+                    <ul>
+                        <li>English (Fluent)</li><li>Nepali (Native)</li><li>Hindi (Conversational)</li>
+                    </ul>
+                </div>
+                <div class="skills-box">
+                    <h3>Soft Skills</h3>
+                    <ul>
+                        <li>Quick Typing Ability</li><li>Problem Solving</li><li>Fluent Communication</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2024 Kundan Dahal. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>

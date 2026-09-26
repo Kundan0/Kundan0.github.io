@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - Kundan Dahal</title>
+    <meta name="description" content="Free QR code generator that runs entirely in your browser. Nothing is uploaded.">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #2c3e50;
+            color: #fff;
+            padding: 1.5rem 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            margin: 0.25rem 0 0;
+            color: #bdc3c7;
+        }
+
+        header a {
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .card {
+            padding: 25px;
+            background: #fff;
+            border-left: 5px solid #3498db;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 1rem 0 0.35rem;
+        }
+
+        label:first-child {
+            margin-top: 0;
+        }
+
+        textarea,
+        select {
+            width: 100%;
+            box-sizing: border-box;
+            font: inherit;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        textarea:focus,
+        select:focus {
+            outline: 2px solid #3498db;
+            border-color: #3498db;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        .preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+            image-rendering: pixelated;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .buttons {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .buttons button {
+            flex: 1;
+            white-space: nowrap;
+        }
+
+        button {
+            font: inherit;
+            padding: 8px 10px;
+            border: none;
+            border-radius: 4px;
+            background: #3498db;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #2c3e50;
+        }
+
+        button:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+
+        .message {
+            min-height: 1.5em;
+            font-size: 0.9rem;
+            color: #777;
+            text-align: center;
+        }
+
+        .message.error {
+            color: #c0392b;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #777;
+            padding: 0 16px 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>QR Code Generator</h1>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <label for="text">Text or URL</label>
+            <textarea id="text" placeholder="https://example.com">https://</textarea>
+
+            <label for="ecc">Error correction</label>
+            <select id="ecc">
+                <option value="L">Low (7%) - smallest code</option>
+                <option value="M" selected>Medium (15%)</option>
+                <option value="Q">Quartile (25%)</option>
+                <option value="H">High (30%) - most robust</option>
+            </select>
+
+            <label for="size">Size: <span id="sizeValue"></span> px</label>
+            <input type="range" id="size" min="128" max="1024" step="32" value="384">
+        </div>
+
+        <div class="card preview">
+            <canvas id="canvas" width="384" height="384" aria-label="Generated QR code"></canvas>
+            <div class="message" id="message"></div>
+            <div class="buttons">
+                <button id="downloadPng">Download PNG</button>
+                <button id="downloadSvg">Download SVG</button>
+                <button id="copy">Copy image</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>QR generation by <a href="https://github.com/kazuhikoarase/qrcode-generator">qrcode-generator</a> (MIT).</footer>
+
+    <script src="qrcode.js"></script>
+    <script>
+        // Encode input as UTF-8 so non-ASCII text (emoji, accents) scans correctly
+        qrcode.stringToBytes = qrcode.stringToBytesFuncs['UTF-8'];
+
+        const $ = (id) => document.getElementById(id);
+        const textEl = $('text'), eccEl = $('ecc'), sizeEl = $('size');
+        const canvas = $('canvas'), ctx = canvas.getContext('2d'), messageEl = $('message');
+        const buttons = [$('downloadPng'), $('downloadSvg'), $('copy')];
+        const QUIET_ZONE = 4; // modules of blank border required by the QR spec
+
+        let current = null;
+
+        function build(text, ecc) {
+            // Type 0 picks the smallest version that fits the data
+            const qr = qrcode(0, ecc);
+            qr.addData(text);
+            qr.make();
+            return qr;
+        }
+
+        function setMessage(text, isError) {
+            messageEl.textContent = text;
+            messageEl.classList.toggle('error', !!isError);
+        }
+
+        function render() {
+            const text = textEl.value;
+            const size = Number(sizeEl.value);
+            $('sizeValue').textContent = size;
+
+            if (!text) {
+                current = null;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                buttons.forEach(b => b.disabled = true);
+                setMessage('Type something to generate a QR code.');
+                return;
+            }
+
+            try {
+                current = build(text, eccEl.value);
+            } catch (e) {
+                current = null;
+                buttons.forEach(b => b.disabled = true);
+                setMessage('Too much data for a QR code. Shorten the text or lower error correction.', true);
+                return;
+            }
+
+            const count = current.getModuleCount();
+            const total = count + QUIET_ZONE * 2;
+            // Whole-pixel cells keep the edges crisp
+            const cell = Math.max(1, Math.floor(size / total));
+            const px = cell * total;
+
+            canvas.width = canvas.height = px;
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, px, px);
+            ctx.fillStyle = '#000000';
+            for (let r = 0; r < count; r++) {
+                for (let c = 0; c < count; c++) {
+                    if (current.isDark(r, c)) {
+                        ctx.fillRect((c + QUIET_ZONE) * cell, (r + QUIET_ZONE) * cell, cell, cell);
+                    }
+                }
+            }
+
+            buttons.forEach(b => b.disabled = false);
+            setMessage(`${px} × ${px} px · ${count} × ${count} modules · ${text.length} characters`);
+        }
+
+        function toSvg() {
+            const count = current.getModuleCount();
+            const total = count + QUIET_ZONE * 2;
+            let path = '';
+            for (let r = 0; r < count; r++) {
+                for (let c = 0; c < count; c++) {
+                    if (current.isDark(r, c)) path += `M${c + QUIET_ZONE} ${r + QUIET_ZONE}h1v1h-1z`;
+                }
+            }
+            return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${total} ${total}" shape-rendering="crispEdges">` +
+                `<rect width="100%" height="100%" fill="#ffffff"/>` +
+                `<path d="${path}" fill="#000000"/></svg>`;
+        }
+
+        function download(href, filename) {
+            const a = document.createElement('a');
+            a.href = href;
+            a.download = filename;
+            a.click();
+        }
+
+        $('downloadPng').addEventListener('click', () => {
+            download(canvas.toDataURL('image/png'), 'qrcode.png');
+        });
+
+        $('downloadSvg').addEventListener('click', () => {
+            const url = URL.createObjectURL(new Blob([toSvg()], { type: 'image/svg+xml' }));
+            download(url, 'qrcode.svg');
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        });
+
+        $('copy').addEventListener('click', () => {
+            if (!navigator.clipboard || !window.ClipboardItem) {
+                setMessage('Copying images is not supported in this browser. Use Download instead.', true);
+                return;
+            }
+            canvas.toBlob(async (blob) => {
+                try {
+                    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+                    setMessage('Copied to clipboard.');
+                } catch (e) {
+                    setMessage('Could not copy. Use Download instead.', true);
+                }
+            });
+        });
+
+        [textEl, eccEl, sizeEl].forEach(el => el.addEventListener('input', render));
+
+        // Allow prefilling via /qr?text=...
+        const prefill = new URLSearchParams(location.search).get('text');
+        if (prefill) textEl.value = prefill;
+
+        render();
+    </script>
+</body>
+
+</html>
